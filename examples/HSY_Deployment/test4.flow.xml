@@ -1,0 +1,9 @@
+<flows>
+
+<vType id="v1" />
+<flow  type="v1" departLane="0" number="2021"  begin="0" end="3600" to="D1" from="D1" color="255,255,0" id="route1"   />
+
+<flow type="v1"  departLane="1" number="2022" begin="0" end="3600" to="D1" from="D1" color="255,255,0" id="route2"    />
+
+<flow type="v1"  departLane="2" number="2021" begin="0" end="3600" to="D1" from="D1" color="255,255,0" id="route3" />
+</flows>

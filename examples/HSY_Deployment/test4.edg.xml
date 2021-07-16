@@ -1,0 +1,10 @@
+
+<edges>
+
+<edge type="a" to="2" from="1" id="D1">
+<lane index="0" speed="25"/>
+<lane index="1" speed="30"/>
+<lane index="2" speed="31"/>
+</edge>
+
+</edges>
