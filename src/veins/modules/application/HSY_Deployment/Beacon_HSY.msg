@@ -16,7 +16,7 @@
 cplusplus {{
 #include "veins/base/utils/Coord.h"
 #include "veins/modules/messages/BaseFrame1609_4_m.h"
-#include "veins/base/utils/SimpleAddress.h"
+#include "veins/base/utils/SimpleAddress.h"0
 }}
 
 namespace veins;

@@ -1,11 +1,9 @@
-<?xml version="1.0"?>
-
-<!--
-// Copyright (C) 2011 Christoph Sommer <sommer@ccs-labs.org>
+//
+// Copyright (C) 2011 David Eckhoff <eckhoff@cs.fau.de>
 //
 // Documentation for these modules is at http://veins.car2x.org/
 //
-// SPDX-License-Identifier: (GPL-2.0-or-later OR CC-BY-SA-4.0)
+// SPDX-License-Identifier: GPL-2.0-or-later
 //
 // This program is free software; you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -21,21 +19,21 @@
 // along with this program; if not, write to the Free Software
 // Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 //
-// -
-//
-// At your option, you can also redistribute and/or modify this file
-// under a
-// Creative Commons Attribution-ShareAlike 4.0 International License.
-//
-// You should have received a copy of the license along with this
-// work.  If not, see <http://creativecommons.org/licenses/by-sa/4.0/>.
--->
 
-<!-- debug config -->
-<launch>
-    <copy file="test4.net.xml" />
-    <copy file="test4.rou.xml" />
-    <copy file="test4.add.xml" />    
-    <copy file="test4.sumo.cfg" type="config" />
-</launch>
+cplusplus {{
+#include "veins/base/utils/Coord.h"
+#include "veins/modules/messages/BaseFrame1609_4_m.h"
+#include "veins/base/utils/SimpleAddress.h"
+}}
 
+namespace veins;
+
+class BaseFrame1609_4;
+class noncobject Coord;
+class LAddress::L2Type extends void;
+
+packet ReportMessage extends BaseFrame1609_4 {
+    Coord senderPos;
+    LAddress::L2Type senderAddress = -1;
+    int senderType;
+}

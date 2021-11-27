@@ -30,7 +30,7 @@ typedef struct NeighborStruct {
     Coord pos;
     double speed;
     int lane;
-};
+};   //typedef 一般在c语言中用来给结构体定义别名的，在c++中不这么用
 
 
 class VEINS_API RoadSideDevice_HSY : public DemoBaseApplLayer {
@@ -62,7 +62,7 @@ protected:
 protected:
     void onWSM(BaseFrame1609_4* wsm) override;
 
-    void handleSelfMsg(cMessage* msg) override;
+    void handleSelfMsg(cMessage* msg) override;    //wsm定义了它如何对接收到的数据做出反应
     void handlePositionUpdate(cObject* obj) override;
     void handleLowerMsg(cMessage* msg) override;
 

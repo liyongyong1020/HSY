@@ -31,12 +31,14 @@ void RoadSideDevice_HSY::initialize(int stage)
 
         EV << "rsu " << myIndex << " is initialized." << endl;
         string myName = getParentModule()->getFullName();
+        EV << "getId: " << getParentModule()->getId() << endl;
+//        EV << myName << " is initialized." << endl;
         string fileType = ".csv";
         fileName = myName + fileType;
         ofstream outFile(fileName,std::ofstream::app|std::ofstream::ate);
         outFile << "time" << "," << "flow" << "," << "occupancy" << "," << "speed" << endl;
         outFile.close();
-
+//        EV << "=====================================================================";
 
     }
 //    else if (stage == 1) {
@@ -96,7 +98,7 @@ void RoadSideDevice_HSY::handlePositionUpdate(cObject* obj)
 void RoadSideDevice_HSY::handleLowerMsg(cMessage* msg)
 {
     BaseFrame1609_4* frame = dynamic_cast<BaseFrame1609_4*>(msg);
-    ASSERT(frame);
+    ASSERT(frame); //断言，如果返回FALSE则终止程序
 
     if (Beacon_HSY* beacon = dynamic_cast<Beacon_HSY*>(frame)) {
         onBeacon(beacon);
@@ -107,7 +109,7 @@ void RoadSideDevice_HSY::handleLowerMsg(cMessage* msg)
     delete (msg);
 }
 
-void RoadSideDevice_HSY::onBeacon(Beacon_HSY* beacon)
+void RoadSideDevice_HSY::onBeacon(Beacon_HSY* beacon)   //通过这个函数收集邻居节点的信息存到本地邻居节点信息集内
 {
     EV << "i am rsu , received beacon from car " << beacon->getSenderIndex() << \
             " : position " << beacon->getSenderPos().info().data() << \
@@ -125,7 +127,7 @@ void RoadSideDevice_HSY::onBeacon(Beacon_HSY* beacon)
         if(neighborListMap.find(beacon->getSenderIndex()) != neighborListMap.end())
         {
             //说明id存在于neighborListMap;
-            delete_id = neighborListMap.find(beacon->getSenderIndex());
+        delete_id = neighborListMap.find(beacon->getSenderIndex());
             neighborListMap.erase(delete_id);
                 }
             }
@@ -133,9 +135,10 @@ void RoadSideDevice_HSY::onBeacon(Beacon_HSY* beacon)
 
     // insert NeighborList
 
+
     neighborListMap.insert(make_pair(beacon->getSenderIndex(), neighborInfo));
 
-    double RSUposition = curPosition.x;
+    double RSUposition = curPosition.x;   //rsu的位置
     double range = 250;
 
 
@@ -154,7 +157,7 @@ void RoadSideDevice_HSY::onBeacon(Beacon_HSY* beacon)
             }
         }
 
-    EV << "This rsu name is : rsu" << myIndex  << "posx is " << RSUposition << endl;
+    EV << "This rsu name is : rsu " << myIndex << " posx is " << RSUposition << endl;
     EV << "My Neighbor List " << "( " << neighborListMap.size() << " neighbors ) :" << endl;
     for(NeighborListMap::iterator it=neighborListMap.begin(); it != neighborListMap.end(); it++) {
 
@@ -179,7 +182,7 @@ void RoadSideDevice_HSY::onBeacon(Beacon_HSY* beacon)
         }
     }
 }
-void RoadSideDevice_HSY::populateBeacon(BaseFrame1609_4* bf, LAddress::L2Type rcvId, int serial)
+void RoadSideDevice_HSY::populateBeacon(BaseFrame1609_4* bf, LAddress::L2Type rcvId, int serial)      //using L2Type = long;
 {
     bf->setRecipientAddress(rcvId);
     bf->setBitLength(headerLength);

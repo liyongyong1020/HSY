@@ -34,6 +34,10 @@
 #include "veins/modules/mobility/traci/TraCIMobility.h"
 #include "veins/modules/mobility/traci/TraCICommandInterface.h"
 
+//new
+#include "veins/modules/messages/ReportMessage_m.h"
+//new
+
 namespace veins {
 
 using veins::AnnotationManager;
@@ -134,6 +138,10 @@ protected:
      */
     virtual void checkAndTrackPacket(cMessage* msg);
 
+    //new
+    virtual void onRM(ReportMessage* rm){};
+    //new
+
 protected:
     /* pointers ill be set when used with TraCIMobility */
     TraCIMobility* mobility;
@@ -176,6 +184,11 @@ protected:
     uint32_t receivedWSMs;
     uint32_t receivedWSAs;
     uint32_t receivedBSMs;
+
+    //new
+    uint32_t generatedRMs;
+    uint32_t receivedRMs;
+    //new
 
     /* messages for periodic events such as beacon and WSA transmissions */
     cMessage* sendBeaconEvt;

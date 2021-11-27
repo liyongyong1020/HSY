@@ -62,6 +62,7 @@ void DemoBaseApplLayer::initialize(int stage)
         wsaInterval = par("wsaInterval").doubleValue();
         currentOfferedServiceId = -1;
 
+
         isParked = false;
 
         findHost()->subscribe(BaseMobility::mobilityStateChangedSignal, this);
@@ -217,6 +218,14 @@ void DemoBaseApplLayer::handleLowerMsg(cMessage* msg)
         receivedWSAs++;
         onWSA(wsa);
     }
+
+    //new
+    else if (ReportMessage* rm = dynamic_cast<ReportMessage*>(wsm)) {
+        EV << "--------------onRM--------------------" << endl;
+        receivedRMs++;
+        onRM(rm);
+        }//new
+
     else {
         receivedWSMs++;
         onWSM(wsm);
@@ -259,6 +268,11 @@ void DemoBaseApplLayer::finish()
 
     recordScalar("generatedWSAs", generatedWSAs);
     recordScalar("receivedWSAs", receivedWSAs);
+
+    //new
+    recordScalar("generatedRMs", generatedRMs);
+    recordScalar("receivedRMs", receivedRMs);
+    //new
 }
 
 DemoBaseApplLayer::~DemoBaseApplLayer()
@@ -315,4 +329,12 @@ void DemoBaseApplLayer::checkAndTrackPacket(cMessage* msg)
         EV_TRACE << "sending down a wsm" << std::endl;
         generatedWSMs++;
     }
+
+    //new
+    else if (dynamic_cast<ReportMessage*>(msg)) {
+        EV_TRACE << "sending down a rm" << std::endl;
+        generatedRMs++;
+    }
+    //new
 }
+

@@ -7,6 +7,7 @@
 
 
 #include <veins/modules/application/HSY_Deployment/OnBoardUnit_HSY.h>
+
 using namespace std;
 
 using namespace veins;
@@ -26,9 +27,9 @@ void OnBoardUnit_HSY::initialize(int stage)
     if (stage == 0) {
         myIndex = getParentModule()->getIndex();
         beaconEvt = new cMessage("beaconEvt_HSY", SEND_BEACON_HSY);
-//        stopPosition = 900+rand()%450;
-        stopPosition = 1059;
-        if(mobility->getId() == 718)
+        stopPosition = 900+rand()%450;
+//        stopPosition = 1272;     //这里设置停车的位置 (1059)
+        if(mobility->getId() == 208)   //得到节点的id
         {
             cout << stopPosition << endl;
         }
@@ -66,9 +67,10 @@ void OnBoardUnit_HSY::handleSelfMsg(cMessage* msg)
             EV << "I am car " << myIndex << " : position " << curPosition.info() << \
                         " , speed " << " , " << mobility->getSpeed() << endl;
             EV << mobility->getId()<<endl;
-            if(mobility->getId() == 718 && curPosition.x > stopPosition)
+            if(mobility->getId() == 208 && curPosition.x > stopPosition)
             {
                 traciVehicle->setSpeed(0);
+                cout << simTime() << endl;
                 traciVehicle->setColor(TraCIColor(255,0,0,255));
                 traciVehicle->changeLane(2, 10000);
 
@@ -86,7 +88,8 @@ void OnBoardUnit_HSY::handleSelfMsg(cMessage* msg)
             break;
         }
         default: {
-            if (msg) EV_WARN << "APP: Error: Got Self Message of unknown kind! Name: " << msg->getName() << endl;
+            if (msg)
+                EV_WARN << "APP: Error: Got Self Message of unknown kind! Name: " << msg->getName() << endl;
             break;
         }
     }
@@ -125,13 +128,13 @@ void OnBoardUnit_HSY::handleLowerMsg(cMessage* msg)
 
 void OnBoardUnit_HSY::onBeacon(Beacon_HSY* beacon)
 {
-    EV << "received beacon from rsu " << beacon->getSenderIndex() << \
-            " : position " << beacon->getSenderPos().info() << \
+    EV << "received beacon from car " << beacon->getSenderIndex() <<   //这里的消息不是rsu发出的，而是其他的车辆发出的
+            " : position " << beacon->getSenderPos().info() <<
             " , speed " << beacon->getSenderSpeed() << endl;
 
     EV << "whole lane " << traciVehicle->getLaneId() << endl;
     std::string wholeLaneId = traciVehicle->getLaneId();
-    LaneId = std::stoi(wholeLaneId.substr(3,1));
+    LaneId = std::stoi(wholeLaneId.substr(3,1));       //wholeLaneId = D1_0     LaneId = 0(例子)
     EV << "lane " << LaneId << endl;
     /* process the information from VANET */
 
