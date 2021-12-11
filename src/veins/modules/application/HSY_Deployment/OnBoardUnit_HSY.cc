@@ -27,9 +27,9 @@ void OnBoardUnit_HSY::initialize(int stage)
     if (stage == 0) {
         myIndex = getParentModule()->getIndex();
         beaconEvt = new cMessage("beaconEvt_HSY", SEND_BEACON_HSY);
-        stopPosition = 900+rand()%450;
-//        stopPosition = 1272;     //这里设置停车的位置 (1059)
-        if(mobility->getId() == 208)   //得到节点的id
+//        stopPosition = 900+rand()%450;
+        stopPosition = 990;     //这里设置停车的位置 (1059)
+        if(mobility->getId() == 508)   //得到节点的id
         {
             cout << stopPosition << endl;
         }

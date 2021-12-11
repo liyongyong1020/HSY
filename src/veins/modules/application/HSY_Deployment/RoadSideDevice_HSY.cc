@@ -117,7 +117,7 @@ void RoadSideDevice_HSY::onBeacon(Beacon_HSY* beacon)   //通过这个函数收集邻居节
     neighborInfo.pos = beacon->getSenderPos();
     neighborInfo.speed = beacon->getSenderSpeed();
     neighborInfo.lane = beacon->getSenderLaneId();
-    findHost()->getDisplayString().updateWith("r=250,green");
+    findHost()->getDisplayString().updateWith("r=75,green");
 
     /* process the information from VANET */
     //Delete Info
@@ -139,7 +139,7 @@ void RoadSideDevice_HSY::onBeacon(Beacon_HSY* beacon)   //通过这个函数收集邻居节
     neighborListMap.insert(make_pair(beacon->getSenderIndex(), neighborInfo));
 
     double RSUposition = curPosition.x;   //rsu的位置
-    double range = 250;
+    double range = 75;
 
 
     //Delete information beyond the communication range
@@ -170,7 +170,7 @@ void RoadSideDevice_HSY::onBeacon(Beacon_HSY* beacon)   //通过这个函数收集邻居节
             if(it->second.speed == 0)
             {
 //                cout << "car[" << it->first << "] had a problem " << endl;
-                findHost()->getDisplayString().updateWith("r=80,red");
+                findHost()->getDisplayString().updateWith("r=40,red");  //原来是80
             }
             //speed
             sumSpeed_HSY += it->second.speed;
