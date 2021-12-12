@@ -148,7 +148,7 @@ void RoadSideDevice_HSY::onBeacon(Beacon_HSY* beacon)   //通过这个函数收集邻居节
                 std::map<int,NeighborStruct>::iterator delete_name;
           //      if(neighborInfo.pos.x - 1000.000 > 800)
 
-                if((RSUposition - it->second.pos.x) > range || it->second.pos.x - RSUposition > 20)
+                if((RSUposition - it->second.pos.x) > range || it->second.pos.x - RSUposition > 20)  //原来设定的
                 {
                     //说明id存在于neighborListMap;
                     delete_name = neighborListMap.find(it->first);
@@ -165,7 +165,7 @@ void RoadSideDevice_HSY::onBeacon(Beacon_HSY* beacon)   //通过这个函数收集邻居节
 
 
         EV << "Neighbor ID: " << it->first << " , " << "The Neighbor Name: car[" << it->first << "] , " << "The position: " << it->second.pos << " , " << "The speed: " << it->second.speed << "laneid: "<< it->second.lane << endl;
-        if((RSUposition - it->second.pos.x) < range && (RSUposition - it->second.pos.x) > 20){
+        if((RSUposition - it->second.pos.x) < range){ //(RSUposition - it->second.pos.x) > 20 用来设置盲区
 //            EV << "valid position : " << it->second.pos.x << "valid speed : " << it->second.speed << endl;
             if(it->second.speed == 0)
             {
